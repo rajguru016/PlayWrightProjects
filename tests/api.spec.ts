@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 //https://dummyjson.com/ - Free Fake REST API for Placeholder JSON Data
 test('should successfully create a new user via API POST request', async ({ request }) => {
+  console.log('API test - create a new user via API POST request...'); 
   const newUser = {
     firstName: 'John',
     lastName: 'Doe',
@@ -27,6 +28,7 @@ test('should successfully create a new user via API POST request', async ({ requ
 
 // https://dummyjson.com/image/SIZE
 test('should fetch an image as binary and validate content-type and size', async ({ request }) => {
+  console.log('API test - fetch an image as binary and validate content-type and size...');
   const url = 'https://dummyjson.com/image/150';
   const response = await request.get(url);
 
