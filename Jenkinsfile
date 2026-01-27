@@ -2,13 +2,18 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'node24.13.0'
+        nodejs 'node18'
+    }
+
+    environment {
+        CI = 'true'
     }
 
     stages {
-        stage('Setup Node') {
+        stage('Verify Node') {
             steps {
                 sh '''
+                  which node
                   node -v
                   npm -v
                 '''
@@ -23,11 +28,11 @@ pipeline {
 
         stage('Install Playwright Browsers') {
             steps {
-                sh 'npx playwright install --with-deps'
+                sh 'npx playwright install'
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Playwright Tests') {
             steps {
                 sh 'npx playwright test'
             }
