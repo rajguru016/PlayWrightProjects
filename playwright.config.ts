@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config } from 'process';
 
 /**
  * Read environment variables from file.
@@ -21,9 +22,6 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -33,7 +31,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     headless: false,
     // Enable auto-heal behavior in tests/plugins when supported by tooling
-    autoHeal: true,
+    //autoHeal: true,
   },
 
   /* Configure projects for major browsers */
@@ -72,6 +70,11 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
+  ],
+
+  reporter: [
+    ['html'],
+    ['junit', { outputFile: 'test-results/junit-report.xml' }]
   ],
 
   /* Run your local dev server before starting the tests */

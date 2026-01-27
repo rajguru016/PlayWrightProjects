@@ -1,46 +1,42 @@
 pipeline {
-  agent any
-  environment {
-    CI = 'true'
-  }
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    agent any
+
+    tools {
+        nodejs 'node24.13.0'
     }
-    stage('Setup Node') {
-      steps {
-        sh 'node -v || true'
-        sh 'npm --version || true'
-      }
+
+    stages {
+        stage('Setup Node') {
+            steps {
+                sh '''
+                  node -v
+                  npm -v
+                '''
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                sh 'npx playwright install --with-deps'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'npx playwright test'
+            }
+        }
     }
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
-      }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+        }
     }
-    stage('Install Playwright Browsers') {
-      steps {
-        sh 'npx playwright install'
-      }
-    }
-    stage('Run Tests') {
-      steps {
-        sh 'npm run test'
-      }
-    }
-    stage('Archive Reports') {
-      steps {
-        archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-        archiveArtifacts artifacts: 'test-results/**', fingerprint: true
-      }
-    }
-  }
-  post {
-    always {
-      junit allowEmptyResults: true, testResults: 'test-results/**/*.xml'
-      archiveArtifacts artifacts: 'playwright-report/**, videos/**, traces/**', fingerprint: true
-    }
-  }
 }
