@@ -1,12 +1,14 @@
 import { Page, Locator } from '@playwright/test';
-import { LocatorRepository } from '../ai/LocatorRepository';
 import { HealingLogger } from '../ai/HealingLogger';
 
 export class AIElementFinder {
-  constructor(private page: Page) {}
+  constructor(
+    private page: Page,
+    private locators: Record<string, string[]>
+  ) {}
 
   async find(key: string): Promise<Locator> {
-    const selectors = LocatorRepository[key];
+    const selectors = this.locators[key];
 
     if (!selectors) {
       throw new Error(`No locators configured for: ${key}`);
