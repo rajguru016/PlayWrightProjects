@@ -20,11 +20,11 @@ test.describe('Login Feature – AI Self-Healing Enabled', () => {
         // Step 2: Login
         await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
-        // Step 3: Validate successful login
+        // Step 3: Validate successful login and secure page loaded
         const message = await securePage.getSuccessMessage();
         expect(message).toContain('You logged into a secure area');
 
-        // Step 4: Logout
+        // Step 4: secure page Logout
         await securePage.logout();
 
         // Step 5: Validate logout
