@@ -5,7 +5,6 @@ import { SemanticHealer } from './SemanticHealer';
 import { ContextualHealer } from './ContextualHealer';
 import { IntentHealer } from './IntentHealer';
 import { VisualHealer } from './VisualHealer';
-
 /**
  * This class:
  * Controls healing order

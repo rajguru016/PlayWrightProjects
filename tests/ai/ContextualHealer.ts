@@ -18,18 +18,34 @@ export class ContextualHealer {
   constructor(private page: Page) {}
 
   async heal(key: string): Promise<Locator | null> {
-    if (key === 'loginButton') {
-      const locator = this.page.locator(
+    const contextualMap: Record<string, string[]> = {
+      //Uncomment if you want to test this layer
+      /*username: [
+        'form input[type="text"]',
+        'form input[name*="user" i]',
+        'label:has-text("Username") ~ input'
+      ],
+      password: [
+        'form input[type="password"]',
+        'form input[name*="pass" i]',
+        'label:has-text("Password") ~ input'
+      ],
+      loginButton: [
+        'form button:has-text("Login")',
+        'form input[type="submit"]',
+        'form button[type="submit"]',
         'form:has(input[type="password"]) button'
-      );
+      ],
+      successMessage: [
+        'form ~ .flash.success',
+        '.flash.success'
+      ]*/
+    };
 
+    for (const selector of contextualMap[key] || []) {
+      const locator = this.page.locator(selector);
       if (await locator.count() === 1) {
-        HealingLogger.log(
-          key,
-          'form:has(password) button',
-          HealingStrategy.CONTEXTUAL,
-          0.7
-        );
+        HealingLogger.log(key, selector, HealingStrategy.CONTEXTUAL, 0.7);
         return locator.first();
       }
     }

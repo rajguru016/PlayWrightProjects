@@ -1,4 +1,6 @@
 import { Page, Locator } from '@playwright/test';
+import { HealingLogger } from './HealingLogger';
+import { HealingStrategy } from './HealingStrategy';
 
 /**
  * Purpose:
@@ -13,8 +15,32 @@ import { Page, Locator } from '@playwright/test';
 export class VisualHealer {
   constructor(private page: Page) {}
 
-  async heal(_key: string): Promise<Locator | null> {
-    // Placeholder for ML / CV-based healing
+  async heal(key: string): Promise<Locator | null> {
+    let locator: Locator;
+
+    switch (key) {
+        //Uncomment if you want to test this layer
+      /*case 'username':
+        locator = this.page.locator('input:visible');
+        break;
+      case 'password':
+        locator = this.page.locator('input[type="password"]:visible');
+        break;
+      case 'loginButton':
+        locator = this.page.locator('button:visible, input[type="submit"]:visible');
+        break;
+      case 'successMessage':
+        locator = this.page.locator('.flash.success:visible, .flash:visible');
+        break;*/
+      default:
+        return null;
+    }
+
+    if (locator && await locator.count() > 0) {
+      HealingLogger.log(key, 'visual fallback', HealingStrategy.VISUAL, 0.5);
+      return locator.first();
+    }
+
     return null;
   }
 }

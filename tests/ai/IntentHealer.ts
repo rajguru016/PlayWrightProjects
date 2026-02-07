@@ -18,19 +18,30 @@ export class IntentHealer {
   constructor(private page: Page) {}
 
   async heal(key: string): Promise<Locator | null> {
-    if (key !== 'loginButton') return null;
+    let candidates: Locator;
 
-    const candidates = this.page.locator('button, input[type="submit"]');
+    switch (key) {
+    //Uncomment if you want to test this layer
+      /*case 'username':
+        candidates = this.page.locator('input[type="text"], input:not([type]), input');
+        break;
+      case 'password':
+        candidates = this.page.locator('input[type="password"]');
+        break;
+      case 'loginButton':
+        candidates = this.page.locator('button, input[type="submit"]');
+        break;
+      case 'successMessage':
+        candidates = this.page.locator('.flash.success, .flash');
+        break;*/
+      default:
+        return null;
+    }
 
     for (let i = 0; i < await candidates.count(); i++) {
       const candidate = candidates.nth(i);
-      if (await candidate.isEnabled()) {
-        HealingLogger.log(
-          key,
-          'enabled clickable candidate',
-          HealingStrategy.INTENT,
-          0.6
-        );
+      if (await candidate.isEnabled() && await candidate.isVisible()) {
+        HealingLogger.log(key,'enabled visible candidate',HealingStrategy.INTENT,0.6);
         return candidate;
       }
     }
