@@ -19,8 +19,8 @@ export class ContextualHealer {
 
   async heal(key: string): Promise<Locator | null> {
     const contextualMap: Record<string, string[]> = {
-      //Uncomment if you want to test this layer
-      /*username: [
+      //Comment below locators if you want to skip this layer
+      username: [
         'form input[type="text"]',
         'form input[name*="user" i]',
         'label:has-text("Username") ~ input'
@@ -39,7 +39,7 @@ export class ContextualHealer {
       successMessage: [
         'form ~ .flash.success',
         '.flash.success'
-      ]*/
+      ]
     };
 
     for (const selector of contextualMap[key] || []) {

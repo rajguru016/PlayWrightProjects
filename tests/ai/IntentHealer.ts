@@ -21,8 +21,8 @@ export class IntentHealer {
     let candidates: Locator;
 
     switch (key) {
-    //Uncomment if you want to test this layer
-      /*case 'username':
+    //Comment below locators if you want to skip this layer
+      case 'username':
         candidates = this.page.locator('input[type="text"], input:not([type]), input');
         break;
       case 'password':
@@ -33,7 +33,7 @@ export class IntentHealer {
         break;
       case 'successMessage':
         candidates = this.page.locator('.flash.success, .flash');
-        break;*/
+        break;
       default:
         return null;
     }

@@ -19,8 +19,8 @@ export class VisualHealer {
     let locator: Locator;
 
     switch (key) {
-        //Uncomment if you want to test this layer
-      /*case 'username':
+        //Comment below locators if you want to skip this layer
+      case 'username':
         locator = this.page.locator('input:visible');
         break;
       case 'password':
@@ -31,7 +31,7 @@ export class VisualHealer {
         break;
       case 'successMessage':
         locator = this.page.locator('.flash.success:visible, .flash:visible');
-        break;*/
+        break;
       default:
         return null;
     }

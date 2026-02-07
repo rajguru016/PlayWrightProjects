@@ -19,8 +19,8 @@ export class SemanticHealer {
 
   async heal(key: string): Promise<Locator | null> {
     const semanticMap: Record<string, string[]> = {
-        //Uncomment if you want to test this layer
-      /*username: [
+        //Comment below locators if you want to skip this layer
+      username: [
         'input[placeholder*="username" i]', 
         'input[aria-label*="username" i]', 
         'input[name*="user" i]'
@@ -40,7 +40,7 @@ export class SemanticHealer {
         '.flash.success',
         '.flash:has-text("secure area")',
         'div:has-text("secure area")'
-      ]*/
+      ]
     };
 
     for (const selector of semanticMap[key] || []) {
