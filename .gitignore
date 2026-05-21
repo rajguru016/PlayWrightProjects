@@ -43,3 +43,9 @@ Thumbs.db
 # Misc
 .cache/
 *.tgz
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

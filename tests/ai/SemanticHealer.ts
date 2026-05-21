@@ -4,7 +4,7 @@ import { HealingStrategy } from './HealingStrategy';
 
 /**
  * Purpose:
- * UI structure changes often, but meaning rarely does.
+ * UI structure changes often, but meaning rarely doesn't.
  * This layer answers:
  * “Can I find the element by what it represents?”
  * 
